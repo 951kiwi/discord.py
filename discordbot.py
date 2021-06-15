@@ -78,5 +78,5 @@ async def on_message(message):
         await message.channel.send("切断しました。")
 
 # Botの起動とDiscordサーバーへの接続
-client.run(TOKEN)
+client.run(token)
 
