@@ -60,12 +60,12 @@ async def on_message(message):
             await message.guild.voice_client.move_to(message.author.voice.channel)  #移動
             print(f"[{message.author.name}]音楽を一時停止")
         print(f"[{message.author.name}]音楽を再生します。")
-        message.guild.voice_client.play(discord.FFmpegPCMAudio("NyanCat\NyanCat.mp3")) #音楽再生
-        await message.channel.send(file=discord.File("NyanCat\Nyancat.gif")) #画像送信
+        message.guild.voice_client.play(discord.FFmpegPCMAudio("nyancat\NyanCat.mp3")) #音楽再生
+        await message.channel.send(file=discord.File("nyancat\Nyancat.gif")) #画像送信
         print("3.5秒クールタイム")
         time.sleep(3.5) #３．５秒待機
         print("クールタイム終了")
-        await message.channel.send(file=discord.File("NyanCat\NyanCat_cat.gif")) #画像送信
+        await message.channel.send(file=discord.File("nyancat\NyanCat_cat.gif")) #画像送信
         print(f"[{message.author.name}]memzコマンド実行完了")
 
 
