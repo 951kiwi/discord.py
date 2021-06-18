@@ -60,7 +60,7 @@ async def on_message(message):
             print(f"[{message.author.name}]音楽を一時停止")
         print(f"[{message.author.name}]音楽を再生します。")
         message.guild.voice_client.play(discord.FFmpegPCMAudio("/app/nyancat/NyanCat.mp3")) #音楽再生
-        await message.channel.send(file=discord.File("/app/nyancat/Nyancat.gif")) #画像送信
+        await message.channel.send(file=discord.File("/app/nyancat/Nyancat.gif")) #画像送信s
         print("3.5秒クールタイム")
         time.sleep(3.5) #３．５秒待機
         print("クールタイム終了")
