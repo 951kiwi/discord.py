@@ -2,7 +2,6 @@ from discord.ext import commands
 import discord
 import time
 import os
-import ffmpeg
 
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
