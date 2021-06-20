@@ -2,6 +2,7 @@ from discord.ext import commands
 import discord
 import time
 import os
+import datetime
 
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
@@ -28,6 +29,13 @@ async def on_ready():
         print('ログインしました')
 
 # メッセージ受信時に動作する処理
+
+@commands.loop(second=10)
+async def send_message_every_10sec():
+    print(datetime.datetime.now())
+
+
+
 
 @client.event
 async def on_message(message):
