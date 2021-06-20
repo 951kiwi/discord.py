@@ -32,8 +32,8 @@ async def on_ready():
 
 @tasks.loop(seconds=10)
 async def send_message_every_10sec():
-    await print("10秒経ったよ")
-    await print(datetime.datetime.now())
+    print("10秒経ったよ")
+    print(datetime.datetime.now())
 
 @client.event
 async def on_message(message):
