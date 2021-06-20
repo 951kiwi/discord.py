@@ -30,9 +30,9 @@ async def on_ready():
 
 # メッセージ受信時に動作する処理
 
-@commands.loop(second=10)
-async def send_message_every_10sec():
-    print(datetime.datetime.now())
+@tasks.loop(second=10)
+async def send_10s():
+    await print(datetime.datetime.now())
 
 
 
