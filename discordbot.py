@@ -45,7 +45,7 @@ async def on_message(message):
     if message.content == '/neko':
         await message.channel.send('にゃーんｓ')
 
-    elif message.content == '/mov':
+    elif message.content == '!mov':
         await message.channel.send("join\1.mp4")
         return
 
