@@ -46,7 +46,7 @@ async def on_message(message):
         await message.channel.send('にゃーんｓ')
 
     elif message.content == '!mov':
-        await message.channel.send("join\1.mp4")
+        await message.channel.send(file=discord.file("join\1.mp4"))
         return
 
 # /memzコマンド
