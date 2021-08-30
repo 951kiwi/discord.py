@@ -17,6 +17,7 @@ print('接続中・・・')
 async def on_ready():
     # 起動したらターミナルにログイン通知が表示される
         sub.start_text
+        print("succeeded")
 
 # メッセージ受信時に動作する処理
 
