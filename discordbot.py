@@ -16,6 +16,7 @@ print('接続中・・・')
 @client.event
 async def on_ready():
     # 起動したらターミナルにログイン通知が表示される
+        print("succeeded")
         sub.start_text()
         print("succeeded")
 
