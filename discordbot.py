@@ -3,7 +3,8 @@ import discord
 import time
 import os
 import datetime
-import sub
+import my_function as mf
+import many_list
 
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
@@ -17,7 +18,7 @@ print('接続中・・・')
 async def on_ready():
     # 起動したらターミナルにログイン通知が表示される
         print("succeeded")
-        sub.start_text()
+        mf.start_text()
         print("succeeded")
 
 # メッセージ受信時に動作する処理
@@ -40,6 +41,33 @@ async def on_message(message):
     elif message.content == '!mov':
         await message.channel.send(file=discord.file("join/1.mp4"))
         return
+    #embeds作成定義
+    if message.content.startswith("!embeds"):
+        tmp = message.content.split(" ")
+        tmp_Element_count = len(tmp)
+        if tmp_Element_count == 1:
+            await message.channel.send("!embedsコマンドの使い方\n!embeds [タイトル] [内容] [カラーコード(16進数)]\nカラーコードは[red,gereen]などでも選択可、もし設定されない場合defaultになります")
+            return
+        if tmp_Element_count == 2:
+            title = tmp[1]
+            descriptions = "_"
+            color = "a"
+        if tmp_Element_count == 3:
+           title = tmp[1]
+           descriptions = tmp[2]
+           color = "a"
+        if tmp_Element_count == 4:
+            title = tmp[1]
+            descriptions = tmp[2]
+            color = tmp[3]
+        enbet = mf.make_enbed( str(title) , str(descriptions) , color )
+        if enbet == "not_color":
+            await message.channel.send("色コードの取得に失敗しました。\n色コードを16進数もしくは英単語[red.pinkなど]で入力してね")
+        elif enbet == "6text":
+            await message.channel.send("色コードの取得に失敗しました。\n色コードの桁数は最大6桁までです。")
+            return
+        else:    
+            await message.channel.send(embed=enbet)
 
 # /memzコマンド
     if message.content == '!memz':
