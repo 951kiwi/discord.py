@@ -28,6 +28,8 @@ async def on_ready():
 
 @tasks.loop(seconds=10)
 async def send_message_every_10sec():
+    for channel in client.get_all_channels():
+        Voice_Channel_List.append(channel.id)
     print("10秒経ったよ")
     print(datetime.datetime.now())
 
