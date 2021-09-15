@@ -1,3 +1,4 @@
+from discord.colour import Colour
 from discord.ext import tasks, commands
 from datetime import datetime, timedelta
 import discord
@@ -21,9 +22,9 @@ print('接続中・・・')
 async def on_ready():
     # 起動したらターミナルにログイン通知が表示される
         print("succeeded")
-        mf.start_text()
         for channel in client.get_all_channels():
             Voice_Channel_List.append(channel.id)
+        mf.start_text()
 
 # メッセージ受信時に動作する処理
 
