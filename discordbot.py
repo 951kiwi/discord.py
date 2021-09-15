@@ -1,4 +1,5 @@
 from discord.ext import tasks, commands
+from datetime import datetime, timedelta
 import discord
 import time
 import os
@@ -8,7 +9,9 @@ import many_list
 
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
-
+voice_faction = 842401744221896704
+Voice_Channel_List = []
+pretime_dict = {}
 
 # 接続に必要なオブジェクトを生成
 client = discord.Client()
@@ -27,6 +30,26 @@ async def on_ready():
 async def send_message_every_10sec():
     print("10秒経ったよ")
     print(datetime.datetime.now())
+
+@client.event
+async def on_voice_state_update(member, before, after):
+    global Voice_Channel_List
+    global pretime_dict
+    voice_server = client.get_channel(voice_faction)
+    if before.channel != after.channel:
+        now = datetime.datetime.utcnow() + timedelta(hours=9)
+        botRoom = client.get_channel(voice_faction)
+        if before.channel is not None and before.channel.id in Voice_Channel_List:
+            duration_time = pretime_dict[before.channel.id] - datetime.datetime.now()
+            duration_time_adjust = int(duration_time.total_seconds())* -1
+            msg = f'{now:%m/%d-%H:%M} に {member.name} が {before.channel.name} から退出しました。  通話時間：{str(duration_time_adjust)}秒'
+            await voice_server.send(msg)
+            print("855662191655387197")
+        if after.channel is not None and after.channel.id in Voice_Channel_List:
+            pretime_dict[after.channel.id] = datetime.datetime.now()
+            msg = f'{now:%m/%d-%H:%M} に {member.name} が {after.channel.name} に参加しました。'
+            await voice_server.send(msg)
+            print("asd")
 
 @client.event
 async def on_message(message):
