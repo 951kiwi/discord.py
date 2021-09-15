@@ -22,14 +22,13 @@ async def on_ready():
     # 起動したらターミナルにログイン通知が表示される
         print("succeeded")
         mf.start_text()
-        print("succeeded")
+        for channel in client.get_all_channels():
+            Voice_Channel_List.append(channel.id)
 
 # メッセージ受信時に動作する処理
 
 @tasks.loop(seconds=10)
 async def send_message_every_10sec():
-    for channel in client.get_all_channels():
-        Voice_Channel_List.append(channel.id)
     print("10秒経ったよ")
     print(datetime.datetime.now())
 
