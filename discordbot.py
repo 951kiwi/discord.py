@@ -42,10 +42,21 @@ async def on_voice_state_update(member, before, after):
         now = datetime.datetime.utcnow() + timedelta(hours=9)
         if before.channel is not None and before.channel.id in Voice_Channel_List:
             duration_time = pretime_dict[before.channel.id] - datetime.datetime.now()
-            duration_time_adjust = int(duration_time.total_seconds())* -1
-
-            title = f"退出通知:// {member.name} // 通話時間：{str(duration_time_adjust)}秒"
-            descriptions = f"{now:%m/%d-%H:%M} に {member.name} が {before.channel.name} から退出しました。  通話時間：{str(duration_time_adjust)}秒"
+            duration_time_adjust = int(duration_time.total_seconds()) * -1
+            total_sec = 0
+            total_min = 0
+            total_hou = 0
+            total_sec = duration_time_adjust % 60 #あまり
+            total_min = (duration_time_adjust // 60) % 60
+            total_hou = (duration_time_adjust // 60) //60
+            title = f"退出通知:// {member.name} // 通話時間：{total_hou}時間{total_min}分{total_sec}秒"
+            descriptions = f"{now:%m/%d-%H:%M} に {member.name} が {before.channel.name} から退出しました。  通話時間：{total_hou}時間{total_min}分{total_sec}秒"
+            if total_hou == 0:
+                title = f"退出通知:// {member.name} // 通話時間：{total_min}分{total_sec}秒"
+                descriptions = f"{now:%m/%d-%H:%M} に {member.name} が {before.channel.name} から退出しました。  通話時間：{total_min}分{total_sec}秒"
+                if total_min == 0:
+                    title = f"退出通知:// {member.name} // 通話時間：{total_sec}秒"
+                    descriptions = f"{now:%m/%d-%H:%M} に {member.name} が {before.channel.name} から退出しました。  通話時間：{total_sec}秒"
             color = str("red")
             embet = mf.make_enbed( str(title) , str(descriptions) , color )
             await voice_server.send(embed=embet)
