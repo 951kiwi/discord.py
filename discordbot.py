@@ -84,7 +84,7 @@ async def on_message(message):
         return
     #embeds作成定義
     if message.content.startswith("!embeds"):
-        tmp = message.content.split(" ")
+        tmp = message.content.split("//")
         tmp_Element_count = len(tmp)
         if tmp_Element_count == 1:
             await message.channel.send("!embedsコマンドの使い方\n!embeds [タイトル] [内容] [カラーコード(16進数)]\nカラーコードは[red,gereen]などでも選択可、もし設定されない場合defaultになります")
