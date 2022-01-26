@@ -1,3 +1,6 @@
+from http import server
+from pydoc import cli
+from webbrowser import get
 from discord.colour import Colour
 from discord.ext import tasks, commands
 from datetime import datetime, timedelta
@@ -7,6 +10,7 @@ import os
 import datetime
 import my_function as mf
 import many_list
+import random
 
 bot = commands.Bot(command_prefix='/')
 token = os.environ['DISCORD_BOT_TOKEN']
@@ -25,13 +29,40 @@ async def on_ready():
         for channel in client.get_all_channels():
             Voice_Channel_List.append(channel.id)
         mf.start_text()
-
+        send_message_every_5sec.start()
+i = 0
+@tasks.loop(seconds=5)
+async def send_message_every_5sec():
+    global i
+    if i == 0:
+        i = 1
+        kiwi = ["🥝","🍉","🍊","🍋","🍌","🍍","🍎","🍏","🍐","🍑","🍒","🍓","🥥","🥭"]
+        sel_f1 = random.choice(kiwi)
+        sel_f2 = random.choice(kiwi)
+        sel_kiwi = "🥝"+sel_f1+"🥝"+sel_f2+"🥝"+"_____________"
+        activity = discord.Activity(name=sel_kiwi, type=discord.ActivityType.listening)
+        await client.change_presence(activity=activity)
+    elif i == 1:
+        i = 0
+        kiwi = ["🥝","🍉","🍊","🍋","🍌","🍍","🍎","🍏","🍐","🍑","🍒","🍓","🥥","🥭"]
+        sel_f1 = random.choice(kiwi)
+        sel_f2 = random.choice(kiwi)
+        sel_f3 = random.choice(kiwi)
+        sel_kiwi = sel_f1+"🥝"+sel_f2+"🥝"+sel_f3+"_____________"
+        activity = discord.Activity(name=sel_kiwi, type=discord.ActivityType.listening)
+        await client.change_presence(activity=activity)
+# メッセージ受信時に動作する処理
 # メッセージ受信時に動作する処理
 
 @tasks.loop(seconds=10)
 async def send_message_every_10sec():
     print("10秒経ったよ")
     print(datetime.datetime.now())
+
+@client.event
+async def on_member_join(member):
+    guild = bot.get_guild(client.get_guild.id)
+    print(guild)
 
 @client.event
 async def on_voice_state_update(member, before, after):
