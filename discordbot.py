@@ -33,22 +33,29 @@ async def on_ready():
 i = 0
 @tasks.loop(seconds=5)
 async def send_message_every_5sec():
+    kiwi = ["🥝","🍉","🍊","🍋","🍌","🍍","🍎","🍏","🍐","🍑","🍒","🍓","🥥","🥭"]
     global i
     if i == 0:
         i = 1
-        kiwi = ["🥝","🍉","🍊","🍋","🍌","🍍","🍎","🍏","🍐","🍑","🍒","🍓","🥥","🥭"]
         sel_f1 = random.choice(kiwi)
         sel_f2 = random.choice(kiwi)
         sel_kiwi = "🥝"+sel_f1+"🥝"+sel_f2+"🥝"+"_____________"
         activity = discord.Activity(name=sel_kiwi, type=discord.ActivityType.listening)
         await client.change_presence(activity=activity)
     elif i == 1:
-        i = 0
-        kiwi = ["🥝","🍉","🍊","🍋","🍌","🍍","🍎","🍏","🍐","🍑","🍒","🍓","🥥","🥭"]
+        i = 2
         sel_f1 = random.choice(kiwi)
         sel_f2 = random.choice(kiwi)
         sel_f3 = random.choice(kiwi)
-        sel_kiwi = sel_f1+"🥝"+sel_f2+"🥝"+sel_f3+"_____________"
+        sel_kiwi = sel_f1+"新機能追加予定"+sel_f2
+        activity = discord.Activity(name=sel_kiwi, type=discord.ActivityType.listening)
+        await client.change_presence(activity=activity)
+    elif i == 2:
+        i = 0
+        sel_f1 = random.choice(kiwi)
+        sel_f2 = random.choice(kiwi)
+        sel_f3 = random.choice(kiwi)
+        sel_kiwi = sel_f1+"ここの文字が変わるよ"+sel_f2
         activity = discord.Activity(name=sel_kiwi, type=discord.ActivityType.listening)
         await client.change_presence(activity=activity)
 # メッセージ受信時に動作する処理
