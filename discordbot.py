@@ -25,7 +25,7 @@ print('接続中・・・')
 @client.event
 async def on_ready():
     # 起動したらターミナルにログイン通知が表示される
-        print("succeeded")
+        print("succeeded v12")
         for channel in client.get_all_channels():
             Voice_Channel_List.append(channel.id)
         mf.start_text()
