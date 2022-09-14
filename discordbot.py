@@ -185,7 +185,12 @@ async def on_message(message):
         user_list = user.members
         for user in user_list:
             print(user.id)
-#DMコマンド
+# !dm コマンド
+    if message.content.startswith("!a"):
+        user = message.guild.get_role(833728710543933521)
+        user_list = user.members
+        for user in user_list:
+            print(user.id)
     if message.content.startswith("!dm"):
         tmp = message.content.split("///")
         if len(tmp) == 1:
@@ -205,14 +210,19 @@ async def on_message(message):
                         return
                     role = message.guild.get_role(int(role))
                     names = []
+                    passed = 0
                     for user_list in role.members:
                         user = await client.fetch_user(user_list.id)
-                        await user.create_dm()
-                        await user.send(str(tmp[2]))
-                        names.append(f"{user_list.name}[NickName:{user_list.nick}]")
+                        try:
+                            await user.create_dm()
+                            await user.send(str(tmp[2]))    
+                            names.append(f"{user_list.name}[NickName:{user_list.nick}]")
+                        except:
+                            passed = passed+1
+                            pass
                     #下メッセージ作成用
                     names = (str(names).replace(",","\n").replace("'","").replace(" ",""))[1:][:-1]
-                    msg = (f"-----[情報]-----\nロール名:\t{role.name}\nロール内人数:\t{len(role.members)}\n送信内容:\t{tmp[2]}\n-----[メンバー]-----\n{names}\n-----\n{len(role.members)}人のユーザーにDMを送信しました。")
+                    msg = (f"-----[情報]-----\nロール名:\t{role.name}\nロール内人数:\t{len(role.members)}\n送信内容:\t{tmp[2]}\n-----[メンバー]-----\n{names}\n-----\n{len(role.members)-passed}人のユーザーにDMを送信しました。")
                     await message.channel.send(msg)
                 else:#ユーザー
                     user = str(tmp[1])
