@@ -15,6 +15,9 @@ voice_faction = 888341603008270367
 Voice_Channel_List = []
 pretime_dict = {}
 
+
+intents=discord.Intents.all()
+client = discord.Client(intents=intents)
 # 接続に必要なオブジェクトを生成
 client = discord.Client()
 print('接続中・・・')
@@ -145,7 +148,7 @@ async def on_message(message):
         else:    
             await message.channel.send(embed=enbet)
 
-# /memzコマンド
+# /memzコマン
     if message.content == '!memz':
         print(f'鯖:[{message.guild.name}({message.channel.name})]/プレイヤー:[{message.author.name}]')
         print("さんが !memz を実行！！猫ネコねこ")
@@ -177,6 +180,53 @@ async def on_message(message):
             return
         await message.guild.voice_client.disconnect()
         await message.channel.send("切断しました。")
+    if message.content.startswith("!a"):
+        user = message.guild.get_role(833728710543933521)
+        user_list = user.members
+        for user in user_list:
+            print(user.id)
+#DMコマンド
+    if message.content.startswith("!dm"):
+        tmp = message.content.split("///")
+        if len(tmp) == 1:
+            await message.channel.send("HELPを表示します。\n!dm///@[ユーザ||ロール]///[内容]\nって感じで使ってね。")
+        if len(tmp) == 2:
+            await message.channel.send("内容が確定していないため送信できません")
+        if len(tmp) == 3:
+            if "<@" in tmp[1] and ">" in tmp[1]:
+                if "&" in tmp[1]:#ロール
+                    role = str(tmp[1])
+                    role = role.replace('<@&','')
+                    role = role.replace(' ','')
+                    role = role.replace('>','')
+                    
+                    if len(role) != 18:
+                        await message.channel.send("ロール取得時に何らかのエラーが発生しました。")
+                        return
+                    role = message.guild.get_role(int(role))
+                    names = []
+                    for user_list in role.members:
+                        user = await client.fetch_user(user_list.id)
+                        await user.send(str(tmp[2]))
+                        names.append(f"{user_list.name}[NickName:{user_list.nick}]")
+                    #下メッセージ作成用
+                    names = (str(names).replace(",","\n").replace("'","").replace(" ",""))[1:][:-1]
+                    msg = (f"-----[情報]-----\nロール名:\t{role.name}\nロール内人数:\t{len(role.members)}\n送信内容:\t{tmp[2]}\n-----[メンバー]-----\n{names}\n-----\n{len(role.members)}人のユーザーにDMを送信しました。")
+                    await message.channel.send(msg)
+                else:#ユーザー
+                    user = str(tmp[1])
+                    user = user.replace('<@','')
+                    user = user.replace(' ','')
+                    user = user.replace('>','')
+                    if len(user) == 18:
+                        user = await client.fetch_user(user)
+                        await user.send(tmp[2])
+                        msg = (f"-----[情報]-----\nユーザー名:\t{user.name}\n送信内容:\t{tmp[2]}\nユーザーにDMを送信しました。")
+                        await message.channel.send(msg)
+                    else:
+                        await message.channel.send("ユーザ取得時に何らかのエラーが発生しました。")
+        
+            
 
 # Botの起動とDiscordサーバーへの接続
 client.run(token)
