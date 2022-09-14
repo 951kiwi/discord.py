@@ -25,7 +25,7 @@ print('接続中・・・')
 @client.event
 async def on_ready():
     # 起動したらターミナルにログイン通知が表示される
-        print("succeeded v12")
+        print("succeeded")
         for channel in client.get_all_channels():
             Voice_Channel_List.append(channel.id)
         mf.start_text()
@@ -207,6 +207,7 @@ async def on_message(message):
                     names = []
                     for user_list in role.members:
                         user = await client.fetch_user(user_list.id)
+                        await user.create_dm()
                         await user.send(str(tmp[2]))
                         names.append(f"{user_list.name}[NickName:{user_list.nick}]")
                     #下メッセージ作成用
@@ -220,6 +221,7 @@ async def on_message(message):
                     user = user.replace('>','')
                     if len(user) == 18:
                         user = await client.fetch_user(user)
+                        await user.create_dm()
                         await user.send(tmp[2])
                         msg = (f"-----[情報]-----\nユーザー名:\t{user.name}\n送信内容:\t{tmp[2]}\nユーザーにDMを送信しました。")
                         await message.channel.send(msg)
