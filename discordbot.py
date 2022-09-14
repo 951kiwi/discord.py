@@ -18,8 +18,8 @@ pretime_dict = {}
 
 intents=discord.Intents.all()
 client = discord.Client(intents=intents)
+
 # 接続に必要なオブジェクトを生成
-client = discord.Client()
 print('接続中・・・')
 # 起動時に動作する処理
 @client.event
